@@ -1,0 +1,7 @@
+beautifulsoup4==4.11.1
+lxml==4.9.1
+elasticsearch==8.3.3
+python-dotenv==0.20.0
+tensorflow_text>=2.0.0rc0
+2captcha-python==1.1.2
+selenium
