@@ -1,4 +1,5 @@
 import pickle
+import random
 import time
 
 from elasticsearch import Elasticsearch
@@ -17,7 +18,6 @@ import os
 from twocaptcha import TwoCaptcha
 from elasticsearch import helpers
 
-gc.enable()
 
 
 def connect_elasticsearch():
@@ -142,13 +142,14 @@ all_d = get_all(es)
 while True:
     for ii, kk in enumerate(all_d):
         try:
+            random_int = random.randint(1, 200)
             _main = kk["main"]
             for j in kk["subs"]:
                 _sub_1 = j["title"]
                 if j.get("subs"):
                     for k in j["subs"]:
                         _sub_2 = k["title"]
-                        driver.get(k["url"] + f"&page={ii+1}")
+                        driver.get(k["url"] + f"&page={random_int}")
                         if check_exists_by_xpath('//*[@id="root"]/div/div/form'):
                             pass_captcha()
                         __scroll_down_page()
@@ -161,7 +162,7 @@ while True:
                         print(f"{_sub_2} - {len(item_data)}")
                         helpers.bulk(es, item_data)
                 else:
-                    driver.get(j["url"] + f"&page={ii+1}")
+                    driver.get(j["url"] + f"&page={random_int}")
                     if check_exists_by_xpath('//*[@id="root"]/div/div/form'):
                         pass_captcha()
                     __scroll_down_page()
